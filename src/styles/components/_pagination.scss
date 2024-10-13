@@ -1,0 +1,20 @@
+.pagination {
+  text-align: center;
+  padding: 10px;
+
+  button {
+    padding: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-radius: 4px;
+    &:hover {
+      color: #fff;
+      background-color: rgba(77, 23, 132, 0.5);
+    }
+  }
+  .selected {
+    color: #fff;
+    background-color: rgba(77, 23, 132);
+  }
+}

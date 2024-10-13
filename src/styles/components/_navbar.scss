@@ -1,0 +1,29 @@
+.navbar-container {
+  background: linear-gradient(0.25turn, #d3c1e5,  #4d1784);
+  padding: 10px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  position: relative;
+  margin: -10px;
+}
+
+.navbar-logo {
+  color: white;
+  font-size: 1.5rem;
+
+}
+
+.navbar-button {
+  width: auto;
+  padding: 5px;
+  background-color: #6a4490;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #a883cc;
+  }
+}
