@@ -16,7 +16,7 @@ const LoginForm: React.FC = () => {
     if (!loginInfo) {
       Swal.fire({
         title: "¡Atención!",
-        text: "Datos inconrrectos",
+        text: "Datos incorrectos",
         icon: "error",
       });
     } else {

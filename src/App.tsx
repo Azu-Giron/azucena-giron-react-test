@@ -12,8 +12,9 @@ import { Method } from './data/interfaces/product.interface';
 import { BASE_URL } from './utils/Globals';
 import { useProduct } from './context/ProductContext';
 import EditProduct from './pages/products/update';
-import { useAuth } from './context/AuthContext';
+
 import MyPerfil from './pages/user';
+import { useAuth } from './context/AuthContext';
 
 const App: React.FC = () => {
   const { isAuthenticated, setStaticUser,isLoggedin } = useAuth()
@@ -61,7 +62,7 @@ const App: React.FC = () => {
                 <EditProduct />
               </ProtectedRoute>
             } />
-            <Route path="/myperfil" element={
+            <Route path="/users" element={
               <ProtectedRoute isAuthenticated={isAuthenticated}>
                 <Navbar />
                 <MyPerfil />

@@ -21,7 +21,8 @@
 
   .myperfil-card {
     display: flex;
-    background-color: #a783cc18;;
+    border: 1px solid rgba(77, 23, 132, 0.1);
+    //background-color: #a783cc18;;
     width: 500px;
     padding: 30px;
     flex-direction: row;
@@ -40,7 +41,7 @@
 
       .myperfil-icon {
         font-size: 100px;
-        color: rgb(255, 255, 255);
+        color: #5f3f7e;
       }
     }
 
@@ -52,7 +53,7 @@
       width: 70%;
 
       .titulo_form {
-        
+        margin-bottom: 50px;
         display: block;
         font-weight: bold;
         color: #6a4490;

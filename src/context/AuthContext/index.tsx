@@ -28,7 +28,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useProduct debe usarse dentro de un ProductProvider');
+    throw new Error('useAuth debe ser utilizado dentro de un AuthProvider');
   }
   return context;
 };
@@ -78,7 +78,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }
 
   return (
-    <AuthContext.Provider value={{ user ,loginInfo, setStaticUser, login, logOut, updateUserInfo, isAuthenticated, isLoggedin}}>
+    <AuthContext.Provider value={{ user ,loginInfo, setStaticUser, login, logOut, updateUserInfo, isAuthenticated,isLoggedin}}>
       {children}
     </AuthContext.Provider>
   );

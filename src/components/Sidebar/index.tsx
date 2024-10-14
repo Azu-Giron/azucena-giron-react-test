@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaBars, FaUserCircle } from 'react-icons/fa'; // Agregado ícono de perfil
+import { FaBars, FaUserCircle } from 'react-icons/fa'; 
 
 interface SidebarProps {
   isOpen: boolean;
@@ -10,7 +10,6 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
   const navigate = useNavigate();
   const [openProductSubmenu, setOpenProductSubmenu] = useState(false);
-  const [openProfileSubmenu, setOpenProfileSubmenu] = useState(false); // Controla el submenú de perfil
 
   const toggleProductSubmenu = () => {
     setOpenProductSubmenu(!openProductSubmenu);
@@ -24,7 +23,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 
       <ul className="sidebar-Links">
         <li className="sidebar-profile">
-          <button className="sidebar-menu-item" onClick={()=> navigate("/myperfil")}>
+          <button className="sidebar-menu-item" onClick={()=> navigate("/users")}>
             <div className='sidebar-container-perfil '>
             <FaUserCircle className="profile-icon" />
             <label> Mi Perfil</label>
