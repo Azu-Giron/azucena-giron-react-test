@@ -1,7 +1,10 @@
 //COMANDOS PARA EJECUTAR PROYECTO
-yarn install / npm install
-yanr start / npm start
+
+Instalación de paqueterias: yarn install / npm install
+Ejecutar aplicación: yarn start / npm start
+realizar build: yarn build
 
 //CREDENCIALES:
-user@example.com
-P@ssword1234
+
+Usuario:user@example.com
+Contraseña: P@ssword1234

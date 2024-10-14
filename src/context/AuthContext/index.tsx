@@ -1,23 +1,23 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { compare } from '../../utils/Globals';
+import { isNullOrUndefined } from '../../utils/validations';
 
 interface User {
   username: string
   password: string
 }
-
 export interface Login {
   username: string
   password: string
   confirmPassword: string
   loggedIn: boolean
 }
-
 interface AuthContextType {
   user: User | undefined;
   loginInfo: Login | undefined;
   setStaticUser: () => void;
   login: (loginIntent: Login) => boolean
+  isLoggedin: () => void;
   logOut: () => void;
   isAuthenticated: boolean
   updateUserInfo: (user: User) => void
@@ -47,8 +47,25 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       return false
     }
     setIsAuthenticated(true);
+    const {password, confirmPassword, ...storageUser} = loginIntent
+    sessionStorage.setItem('user', JSON.stringify(storageUser));
     setLoginInfo({...loginIntent, loggedIn: true})
     return true
+  }
+
+  const isLoggedin = () => {
+    const storageUser = sessionStorage.getItem('user');
+    if(isNullOrUndefined(storageUser)) {
+      setIsAuthenticated(false);
+      return
+    }
+    try {
+      JSON.parse(storageUser!);
+      setIsAuthenticated(true);
+    } catch {
+      setIsAuthenticated(false);
+    }
+    
   }
 
   const logOut = () => {
@@ -61,7 +78,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }
 
   return (
-    <AuthContext.Provider value={{ user ,loginInfo, setStaticUser, login, logOut, updateUserInfo, isAuthenticated}}>
+    <AuthContext.Provider value={{ user ,loginInfo, setStaticUser, login, logOut, updateUserInfo, isAuthenticated, isLoggedin}}>
       {children}
     </AuthContext.Provider>
   );

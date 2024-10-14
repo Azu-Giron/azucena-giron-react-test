@@ -16,11 +16,12 @@ import { useAuth } from './context/AuthContext';
 import MyPerfil from './pages/user';
 
 const App: React.FC = () => {
-  const { isAuthenticated, setStaticUser } = useAuth()
+  const { isAuthenticated, setStaticUser,isLoggedin } = useAuth()
   const { products, setProducts } = useProduct();
 
   useEffect(() => {
     setStaticUser();
+    isLoggedin();
     const getProducts = async () => {
       try {
         const response = await axios({
