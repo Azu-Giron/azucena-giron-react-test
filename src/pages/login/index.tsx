@@ -13,7 +13,6 @@ const LoginForm: React.FC = () => {
   const handleLogin = (loginIntent: Login) => {
     const loginInfo = login(loginIntent);
 
-    console.log("=>entro",loginInfo)
     if (!loginInfo) {
       Swal.fire({
         title: "¡Atención!",

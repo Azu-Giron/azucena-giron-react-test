@@ -22,7 +22,7 @@ const Products: React.FC<props> = (props) => {
 
   useEffect(() => {
     const filtered = products.filter(product => product.title.toLowerCase().includes(filterValue.toLowerCase()))
-    setFilteredProducts(filtered)
+    setFilteredProducts(filtered);
     setPagination((prevState) => ({...prevState, total: filtered.length}))
     setForceSort((prevState) => (prevState + 1))
   }, [products, filterValue])

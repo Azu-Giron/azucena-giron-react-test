@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { FormDataProduct, useProduct } from '../../../context/ProductContext';
 import { BASE_URL } from '../../../utils/Globals';
 import { Method } from '../../../data/interfaces/product.interface';
+import { isNullOrUndefined } from '../../../utils/validations';
 
 const EditProduct: React.FC = () => {
   const { id } = useParams()
@@ -21,14 +22,13 @@ const EditProduct: React.FC = () => {
   })
 
   useEffect(() => {
-    if(id === null) {
+    if(isNullOrUndefined(id)) {
       navigate("/products")
     }
     let product = getProduct(Number(id))
-    if(product === null) {
+    if(isNullOrUndefined(product)) {
       navigate("/products")
     } else {
-      console.log(product)
       setProduct(product!)
     }
   }, [getProduct, id, navigate])
