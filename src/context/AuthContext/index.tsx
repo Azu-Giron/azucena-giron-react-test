@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { compare } from '../../utils/Globals';
+import { comparePasswords, decryptContent, encryptContent } from '../../utils/Globals';
 import { isNullOrUndefined } from '../../utils/validations';
 
 interface User {
@@ -39,33 +39,37 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
 
   const setStaticUser = () => {
-    setUser({username: "user@example.com", password: "501fe884fdbbb0bceafff5f4fd2f3423cd32d435e96a0a85e56cdf067a632894"})
+    setUser({ username: "user@example.com", password: "501fe884fdbbb0bceafff5f4fd2f3423cd32d435e96a0a85e56cdf067a632894" })
   }
 
   const login = (loginIntent: Login) => {
-    if(user?.username !== loginIntent.username || !compare(loginIntent.password, user?.password)) {
+    if (user?.username !== loginIntent.username || !comparePasswords(loginIntent.password, user?.password)) {
       return false
     }
     setIsAuthenticated(true);
-    const {password, confirmPassword, ...storageUser} = loginIntent
-    sessionStorage.setItem('user', JSON.stringify(storageUser));
-    setLoginInfo({...loginIntent, loggedIn: true})
+    const { password, confirmPassword, ...storageUser } = loginIntent
+    storageUser.loggedIn = true
+    sessionStorage.setItem('user', encryptContent(JSON.stringify(storageUser)));
+    setLoginInfo({ ...loginIntent, loggedIn: true })
     return true
   }
 
   const isLoggedin = () => {
     const storageUser = sessionStorage.getItem('user');
-    if(isNullOrUndefined(storageUser)) {
+    if (isNullOrUndefined(storageUser)) {
       setIsAuthenticated(false);
+      setLoginInfo(undefined)
       return
     }
     try {
-      JSON.parse(storageUser!);
+      const loginInfo = JSON.parse(decryptContent(storageUser!)) as Login;
       setIsAuthenticated(true);
+      setLoginInfo({...loginInfo, loggedIn: true})
     } catch {
       setIsAuthenticated(false);
+      setLoginInfo(undefined);
     }
-    
+
   }
 
   const logOut = () => {
@@ -78,7 +82,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }
 
   return (
-    <AuthContext.Provider value={{ user ,loginInfo, setStaticUser, login, logOut, updateUserInfo, isAuthenticated,isLoggedin}}>
+    <AuthContext.Provider value={{ user, loginInfo, setStaticUser, login, logOut, updateUserInfo, isAuthenticated, isLoggedin }}>
       {children}
     </AuthContext.Provider>
   );
