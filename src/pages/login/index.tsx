@@ -4,36 +4,41 @@ import { useAuth, Login } from '../../context/AuthContext';
 import { useFormik } from 'formik';
 import { LoginFormInitialValues } from '../../data/interfaces/login.interface';
 import { LoginSchema } from '../../data/schemas/login.schema';
-import { encrypt } from '../../utils/Globals';
+import Swal from 'sweetalert2';
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
   const { login } = useAuth()
 
   const handleLogin = (loginIntent: Login) => {
-    console.log("entro")
-    login(loginIntent);
-    // Redirigir a /products después del login
-    navigate('/products');
+    const loginInfo = login(loginIntent);
+
+    console.log("=>entro",loginInfo)
+    if (!loginInfo) {
+      Swal.fire({
+        title: "¡Atención!",
+        text: "Datos inconrrectos",
+        icon: "error",
+      });
+    } else {
+      navigate('/products');
+    }
   };
 
   const formik = useFormik({
     initialValues: LoginFormInitialValues,
     validationSchema: LoginSchema,
     enableReinitialize: true,
-    onSubmit: (values) =>  {
-      const {  username,password,confirmPassword} = values
-
-      handleLogin({username:username, password:encrypt(password), confirmPassword: encrypt(confirmPassword),loggedIn:false})
-    },
+    onSubmit: (values) => handleLogin(values),
   });
 
   return (
     <div className="login-container">
-      <h2>Login</h2>
+
       <form className='login-form' onSubmit={formik.handleSubmit}>
+        <h3>Iniciar sesión</h3>
         <div className="form-group">
-          <label>Email</label>
+          <label className='label'>Correo electrónico</label>
           <input
             type="email"
             id="username"
@@ -76,7 +81,7 @@ const LoginForm: React.FC = () => {
           }
         </div>
 
-        <button className="login-button" type="submit">Login</button>
+        <button className="login-button" type="submit">Continuar</button>
       </form>
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import Swal from "sweetalert2";
+import { compare } from '../../utils/Globals';
 
 interface User {
   username: string
@@ -17,7 +17,7 @@ interface AuthContextType {
   user: User | undefined;
   loginInfo: Login | undefined;
   setStaticUser: () => void;
-  login: (loginIntent: Login) => Login | undefined
+  login: (loginIntent: Login) => boolean
   logOut: () => void;
   isAuthenticated: boolean
   updateUserInfo: (user: User) => void
@@ -38,24 +38,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [loginInfo, setLoginInfo] = useState<Login | undefined>(undefined)
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
 
- 
   const setStaticUser = () => {
-    setUser({username: "user@example.com", password: "U2FsdGVkX18QWx4QTs9RClu2+pQuG0Jr+1DDrHmTZQQ="})
+    setUser({username: "user@example.com", password: "501fe884fdbbb0bceafff5f4fd2f3423cd32d435e96a0a85e56cdf067a632894"})
   }
 
   const login = (loginIntent: Login) => {
-    if(user?.username !== loginIntent.username || user?.password !== loginIntent.password) {
-      // Swal.fire({
-      //   title: "¡Atención!",
-      //   text: "Datos inconrrectos",
-      //   icon: "error",
-      // });
-      return undefined
+    if(user?.username !== loginIntent.username || !compare(loginIntent.password, user?.password)) {
+      return false
     }
-   
-    setIsAuthenticated(true)
+    setIsAuthenticated(true);
     setLoginInfo({...loginIntent, loggedIn: true})
-    return loginInfo!
+    return true
   }
 
   const logOut = () => {

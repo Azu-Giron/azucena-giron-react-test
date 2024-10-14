@@ -13,9 +13,10 @@ import { BASE_URL } from './utils/Globals';
 import { useProduct } from './context/ProductContext';
 import EditProduct from './pages/products/update';
 import { useAuth } from './context/AuthContext';
+import MyPerfil from './pages/user';
 
 const App: React.FC = () => {
-  const { isAuthenticated, setStaticUser ,loginInfo} = useAuth()
+  const { isAuthenticated, setStaticUser} = useAuth()
   const { products, setProducts } = useProduct();
 
   useEffect(() => {
@@ -34,10 +35,6 @@ const App: React.FC = () => {
     getProducts()
   }, [])
 
-
-  useEffect(() => {
-    console.log("=>", isAuthenticated,loginInfo)
-  }, [isAuthenticated,loginInfo])
 
   return (
     <Router>
@@ -63,11 +60,12 @@ const App: React.FC = () => {
                 <EditProduct />
               </ProtectedRoute>
             } />
-            {/* <Route path="/users" element={
+            <Route path="/myperfil" element={
               <ProtectedRoute isAuthenticated={isAuthenticated}>
-                <Users />
+                    <Navbar />
+                <MyPerfil />
               </ProtectedRoute>
-            } /> */}
+            } /> 
           </>
         )}
 

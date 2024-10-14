@@ -1,10 +1,13 @@
-var CryptoJS = require('crypto-js');
+import { SHA256, enc } from 'crypto-js';
+import { isNullOrUndefined } from './validations';
 
 export const BASE_URL = "https://fakestoreapi.com/products"
 
-//Deberia estar en un .env o un archivo similar pero se coloca acá por tema ejemplo
-const cryptoKey = "N4ch-Pr0duct5-3X4mplE"
-
 export const encrypt = (text: string) => {
-  return CryptoJS.AES.encrypt(text, cryptoKey).toString();
+  return SHA256(text).toString(enc.Hex);
+}
+
+export const compare = (text: string, encryptedText: string | undefined) => {
+  if(isNullOrUndefined(encryptedText)) return false
+  return encrypt(text) === encryptedText
 }

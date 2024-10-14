@@ -110,7 +110,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  padding: 50px 350px 0px 350px;
+  padding: 50px 300px 0px 300px;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
 
@@ -176,23 +176,26 @@
     justify-content: center;
     align-items: center;
     padding: 10px; 
+
   }
   
   .filter-input {
-    border: 1px solid;
+    display: flex;
+    border: 1px solid #00000012;
+    border-radius: 5px;
     padding: 10px; 
+    align-items: center;
+    justify-content: center;
     input {
-      border: none;
+    background: none;
+    border: none;
       &:focus {
         outline: none;
       }
     }
-   
   }
   
-  .filter-input:focus {
-    outline: dashed red;
-  }
+  
 }
 
 

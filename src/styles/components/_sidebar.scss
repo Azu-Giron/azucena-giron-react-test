@@ -4,7 +4,7 @@
   left: -250px;
   width: 250px;
   height: 100%;
-  background: linear-gradient(#d3c1e5,  #4d1784);
+  background: linear-gradient(#d3c1e5, #4d1784);
   padding: 30px;
   transition: left 0.3s ease;
   z-index: 1000;
@@ -18,31 +18,16 @@
       text-decoration: none;
       display: block;
       padding: 2px;
-     
-      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+      font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+        "Lucida Sans", Arial, sans-serif;
       &:hover {
         color: #4d1784;
       }
     }
   }
-}
 
-.sidebar-open {
-  left: 0;
-}
-
-.sidebar-closeButton {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 2rem;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-}
-
-ul {
+  ul {
     list-style: none;
     padding: 0;
 
@@ -69,11 +54,36 @@ ul {
 
     .sidebar-submenu {
       margin-left: 30px;
-
-     
     }
+  }
+
+  .sidebar-container-perfil {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
   }
   .sidebar-icon {
     font-size: 24px;
     color: white;
   }
+
+  .profile-icon {
+    font-size: 24px;
+  }
+}
+
+.sidebar-open {
+  left: 0;
+}
+
+.sidebar-closeButton {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
