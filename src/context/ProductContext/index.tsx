@@ -38,7 +38,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
     return products.find(product => product.id === id)
   }
 
-  const handleEdit =(editedProduct: FormDataProduct) =>{
+  const editProduct =(editedProduct: FormDataProduct) =>{
     let index = products.findIndex((product) => product.id === editedProduct.id)
     if(index < -1) {
       console.log("No se pudo editar")
@@ -49,11 +49,11 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
     setProducts(editedProducts)
   }
 
-  const handleDelete =(deletedIdProduct: number) =>{
+  const deleteProduct =(deletedIdProduct: number) =>{
     setProducts((prevState) => prevState.filter(product => product.id !== deletedIdProduct))
   }
   return (
-    <ProductContext.Provider value={{ products ,setProducts, addProduct:addProduct, getProduct:getProduct, deleteProduct:handleDelete, editProduct:handleEdit}}>
+    <ProductContext.Provider value={{ products ,setProducts, addProduct, getProduct, deleteProduct, editProduct}}>
       {children}
     </ProductContext.Provider>
   );

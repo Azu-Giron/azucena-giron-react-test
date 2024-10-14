@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FormDataProduct, useProduct } from '../../context/ProductContext';
+import { FormDataProduct } from '../../context/ProductContext';
 import { useNavigate } from 'react-router-dom';
 import { PaginationInterface } from '../../data/interfaces/pagination.interface';
 import { Order, SortOrder } from '../../data/interfaces/product.interface';

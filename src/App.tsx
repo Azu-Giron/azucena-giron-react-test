@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 
-import { useAuth } from './hooks/useAuth';
 import Login from './pages/login';
 import Navbar from './components/Navbar';
 import ProtectedRoute from './pages/protectedRoute';
@@ -13,12 +12,14 @@ import { Method } from './data/interfaces/product.interface';
 import { BASE_URL } from './utils/Globals';
 import { useProduct } from './context/ProductContext';
 import EditProduct from './pages/products/update';
+import { useAuth } from './context/AuthContext';
 
 const App: React.FC = () => {
-  const { isAuthenticated, login } = useAuth();
+  const { isAuthenticated, setStaticUser ,loginInfo} = useAuth()
   const { products, setProducts } = useProduct();
 
   useEffect(() => {
+    setStaticUser();
     const getProducts = async () => {
       try {
         const response = await axios({
@@ -26,17 +27,22 @@ const App: React.FC = () => {
           url: BASE_URL
         });
         setProducts(response.data)
-      }  catch (error) {
+      } catch (error) {
         console.log(error)
       }
     }
     getProducts()
   }, [])
-  
+
+
+  useEffect(() => {
+    console.log("=>", isAuthenticated,loginInfo)
+  }, [isAuthenticated,loginInfo])
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login login={login} />} />
+        <Route path="/" element={<Login />} />
         {isAuthenticated && (
           <>
             <Route path="/products" element={
@@ -51,10 +57,10 @@ const App: React.FC = () => {
                 <CreateProduct />
               </ProtectedRoute>
             } />
-              <Route path="/products/update/:id" element={
+            <Route path="/products/update/:id" element={
               <ProtectedRoute isAuthenticated={isAuthenticated}>
                 <Navbar />
-                <EditProduct  />
+                <EditProduct />
               </ProtectedRoute>
             } />
             {/* <Route path="/users" element={
