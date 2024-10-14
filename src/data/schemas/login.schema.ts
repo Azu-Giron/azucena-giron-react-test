@@ -5,7 +5,11 @@ const LoginSchema = Yup.object({
   password: Yup.string()
   .required()
   .min(6)
-  .max(13)
+  .max(12)
+  .matches(/\W|_/g, "Debe contener un carácter")
+  .matches(/.*[0-9].*/g, "Debe contener almenos un número")
+  .matches(/[A-Z]/g, "Debe contener almenos una letra mayúscula")
+  .matches(/[a-z]/g, "Debe contener almenos una letra minúscula")
   .label("Contraseña"),
   confirmPassword: Yup.string()
   .required()
