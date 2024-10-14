@@ -2,6 +2,8 @@ import { useFormik } from 'formik';
 import { ProductFormSchema } from '../../data/schemas/product.schema';
 import { FormDataProduct, useProduct } from '../../context/ProductContext';
 import { useNavigate } from 'react-router-dom';
+import Spinner from '../Spinner';
+import { MdDeleteForever } from "react-icons/md";
 
 type Props = {
   product: FormDataProduct;
@@ -20,7 +22,7 @@ export interface FormData {
 const ProductForm: React.FC<Props> = (props) => {
   const { product, onSubmit, isLoading } = props;
   const navigate = useNavigate();
-  const {deleteProduct } = useProduct();
+  const { deleteProduct } = useProduct();
   const formik = useFormik({
     initialValues: {
       title: product.title,
@@ -49,108 +51,114 @@ const ProductForm: React.FC<Props> = (props) => {
     formik.setFieldValue('image', "")
   };
 
-  const handleRemoveIdProduct = (id: number)=>{
+  const handleRemoveIdProduct = (id: number) => {
     deleteProduct(id);
     navigate("/products")
   }
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <div className="form-group">
-        <label htmlFor="title">Nombre del producto:</label>
-        <input
-          type="text"
-          id="title"
-          name="title"
-          className="form-control"
-          value={formik.values.title}
-          onBlur={formik.handleBlur}
-          onChange={formik.handleChange}
-        />
-        {formik.touched.title && formik.errors.title &&
-          <label className='error'>{formik.errors.title}</label>
-        }
-      </div>
+    <>
+      {isLoading &&
+        <div className='spinner-container '>
+          <Spinner isLoading={isLoading} />
+        </div>
+      }
+      <form onSubmit={formik.handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="title">Nombre del producto:</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            className="form-control"
+            value={formik.values.title}
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+          />
+          {formik.touched.title && formik.errors.title &&
+            <label className='error'>{formik.errors.title}</label>
+          }
+        </div>
 
-      <div className="form-group">
-        <label htmlFor="description">Descripción:</label>
-        <input
-          type="textarea"
-          id="description"
-          name="description"
-          className="form-control"
-          value={formik.values.description}
-          onBlur={formik.handleBlur}
-          onChange={formik.handleChange}
-        />
-        {formik.touched.description && formik.errors.description &&
-          <label className='error'>{formik.errors.description}</label>
-        }
-      </div>
+        <div className="form-group">
+          <label htmlFor="description">Descripción:</label>
+          <input
+            type="textarea"
+            id="description"
+            name="description"
+            className="form-control"
+            value={formik.values.description}
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+          />
+          {formik.touched.description && formik.errors.description &&
+            <label className='error'>{formik.errors.description}</label>
+          }
+        </div>
 
-      <div className="form-group">
-        <label htmlFor="price">Precio:</label>
-        <input
-          type="number"
-          id="price"
-          name="price"
-          className="form-control"
-          value={formik.values.price}
-          onBlur={formik.handleBlur}
-          onChange={formik.handleChange}
-        />
-        {formik.touched.price && formik.errors.price &&
-          <label className='error'>{formik.errors.price}</label>
-        }
-      </div>
-      <div className="form-group">
-        <label htmlFor="category">Categoría:</label>
-        <input
-          type="text"
-          id="category"
-          name="category"
-          className="form-control"
-          value={formik.values.category}
-          onBlur={formik.handleBlur}
-          onChange={formik.handleChange}
-        />
-        {formik.touched.category && formik.errors.category &&
-          <label className='error'>{formik.errors.category}</label>
-        }
-      </div>
+        <div className="form-group">
+          <label htmlFor="price">Precio:</label>
+          <input
+            type="number"
+            id="price"
+            name="price"
+            className="form-control"
+            value={formik.values.price}
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+          />
+          {formik.touched.price && formik.errors.price &&
+            <label className='error'>{formik.errors.price}</label>
+          }
+        </div>
+        <div className="form-group">
+          <label htmlFor="category">Categoría:</label>
+          <input
+            type="text"
+            id="category"
+            name="category"
+            className="form-control"
+            value={formik.values.category}
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+          />
+          {formik.touched.category && formik.errors.category &&
+            <label className='error'>{formik.errors.category}</label>
+          }
+        </div>
 
 
-      <div className="form-group">
-        <label htmlFor="image">Imagen del producto:</label>
-        <input
-          id="image"
-          name="image"
-          type="file"
-          accept="image/*"
-          className="form-control"
-          onChange={handleImageChange}
-        />
-        {(formik.values.image) && (
-          <div>
-            <h2>Imagen Cargada:</h2>
-            <div style={{ justifyContent: "center", display: "flex" }}>
-              <img src={formik.values.image} alt="Producto" style={{ maxWidth: '300px', maxHeight: '200px' }} />
+        <div className="form-group">
+          <label htmlFor="image">Imagen del producto:</label>
+          <input
+            id="image"
+            name="image"
+            type="file"
+            accept="image/*"
+            className="form-control"
+            onChange={handleImageChange}
+          />
+          {(formik.values.image) && (
+            <div>
+              <div className='container-btn-img '>
+                <h2>Imagen Cargada</h2>
+                <button className="btn-delete-imagen" onClick={handleRemoveImage}><MdDeleteForever /></button>
+              </div>
+              <div className='container-img'>
+                <img className='img' src={formik.values.image} alt="Producto" />
+              </div>
             </div>
-            <p><strong>URL Temporal:</strong></p>
-            <textarea readOnly value={formik.values.image} style={{ width: '100%', height: '50px' }} />
-            <button onClick={handleRemoveImage}>Eliminar Imagen</button>
-          </div>
-        )}
-      </div>
-      <div className='container-btn-submit'>
-        {product.id &&
-          <button type="submit" className="btn-delete" onClick={()=> handleRemoveIdProduct(product.id!)}>Eliminar</button>
-        }
-        <button type="submit" className="btn-submit">Guardar</button>
-      </div>
+          )}
+        </div>
+        <div className='container-btn-submit'>
+          {product.id &&
+            <button type="submit" className="btn-delete" onClick={() => handleRemoveIdProduct(product.id!)}>Eliminar</button>
+          }
+          <button type="submit" className="btn-submit">Guardar</button>
+        </div>
 
-    </form>
-
+      </form>
+    </>
   );
 };
 
