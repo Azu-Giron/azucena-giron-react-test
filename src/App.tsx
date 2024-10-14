@@ -16,7 +16,7 @@ import { useAuth } from './context/AuthContext';
 import MyPerfil from './pages/user';
 
 const App: React.FC = () => {
-  const { isAuthenticated, setStaticUser} = useAuth()
+  const { isAuthenticated, setStaticUser } = useAuth()
   const { products, setProducts } = useProduct();
 
   useEffect(() => {
@@ -62,10 +62,10 @@ const App: React.FC = () => {
             } />
             <Route path="/myperfil" element={
               <ProtectedRoute isAuthenticated={isAuthenticated}>
-                    <Navbar />
+                <Navbar />
                 <MyPerfil />
               </ProtectedRoute>
-            } /> 
+            } />
           </>
         )}
 
